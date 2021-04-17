@@ -1,0 +1,175 @@
+```
+1.删除排序数组中的重复项
+
+给定一个排序数组，你需要在 原地 删除重复出现的元素，使得每个元素只出现一次，返回移除后数组的新长度。
+
+不要使用额外的数组空间，你必须在 原地 修改输入数组 并在使用 O(1) 额外空间的条件下完成。
+
+例子1
+给定数组 nums = [1,1,2], 
+
+函数应该返回新的长度 2, 并且原数组 nums 的前两个元素被修改为 1, 2。 
+
+你不需要考虑数组中超出新长度后面的元素。
+
+
+例子2
+给定 nums = [0,0,1,1,1,2,2,3,3,4],
+
+函数应该返回新的长度 5, 并且原数组 nums 的前五个元素被修改为 0, 1, 2, 3, 4。
+
+你不需要考虑数组中超出新长度后面的元素。
+
+
+//解题
+var removeDuplicates = function(nums) {
+    if(nums.length<2){
+      return nums.length
+    }
+    let i = 0;
+    for(let j = i+1;j<nums.length;j++){
+      if(nums[i] != nums[j]){
+        i++
+        nums[i] = nums[j]
+      }
+    }
+    return i + 1
+};
+```
+
+```
+2.定义一个函数，输入一个链表的头节点，反转该链表并输出反转后链表的头节点。
+
+例子：
+输入: 1->2->3->4->5->NULL
+输出: 5->4->3->2->1->NULL
+
+//解题
+function reverseList(head){
+	let prev = null,cur = head,temp = null
+    while(cur){
+    	temp = cur.next
+        cur.next = prev
+        prev = cur
+        cur = temp
+    }
+    
+    return prev
+}
+
+```
+
+```
+3.最长公共前缀
+编写一个函数来查找字符串数组中的最长公共前缀。
+
+如果不存在公共前缀，返回空字符串 ""。
+
+e.g
+输入: ["flower","flow","flight"]
+输出: "fl"
+
+输入: ["dog","racecar","car"]
+输出: ""
+解释: 输入不存在公共前缀。
+
+//解题
+ var longestCommonPrefix = function (strs) {
+    if(strs.length===1){
+      return strs[0]
+    }
+    if(strs.length ===0){
+      return ''
+    }
+    let firstStr = strs[0]
+    let result = ''
+    for(let i = 0;i<firstStr.length;i++){
+      let flag = strs.every(item=>item[i]===firstStr[i])
+      if(flag){
+        result = result+firstStr[i]
+      }else{
+        return result
+      }
+    }
+    return result
+  };
+```
+
+```
+给定一个只包括 '('，')'，'{'，'}'，'['，']' 的字符串，判断字符串是否有效。
+
+有效字符串需满足：
+
+左括号必须用相同类型的右括号闭合。
+左括号必须以正确的顺序闭合。
+注意空字符串可被认为是有效字符串。
+
+示例 1:
+
+输入: "()"
+输出: true
+示例 2:
+
+输入: "()[]{}"
+输出: true
+示例 3:
+
+输入: "(]"
+输出: false
+示例 4:
+
+输入: "([)]"
+输出: false
+示例 5:
+
+输入: "{[]}"
+输出: true
+
+//解题
+  var isValid = function (s) {
+    let stack = [], result=true
+    let map = new Map([["}", "{"], ["]", "["], [")", "("]])
+    if (s.length % 2 != 0) {
+      return false
+    }
+    for(let i = 0;i<s.length;i++){
+      if(!map.has(s[i])){
+        stack.push(s[i]) // [{,{,{,]
+      }else if(map.get(s[i]) === stack.pop()){
+        result = true
+      }else{
+        return false
+      }
+    }
+    if(stack.length!=0) return false
+    return result
+  }
+```
+
+```
+快速排序
+function quickSort(arr){
+	if (arr.length<=0){
+    	return arr
+    }
+    
+    //找到数组的中间项，在原有的数组中把它移除
+    let middleIndex = Math.floor(arr.length/2)
+    let middleValue = arr.splice(middleIndex,1)[0]
+    
+    //准备左右两个数组，循环剩下数组中的每一项，比当前小的放到左边数组，反之放到右边数组
+    let leftArr = []
+    let rightArr = []
+    for(let i = 0,len = arr.length;i<len;i++){
+    	let item = arr[i]
+        item < middleValue?leftArr.push(item):rightArr.push(item)
+    }
+    
+    //递归方式让左右两边的数组持续这样的处理
+    return quickSort(leftArr).concat(middleValue,quickSort(rightArr))
+}
+```
+
+
+
+
